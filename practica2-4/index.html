@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Practica2 4 - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Practica2 4</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#practica-24-balanceo-de-carga-con-proxy-inverso-en-nginx" class="nav-link">Práctica 2.4 – Balanceo de carga con proxy inverso en Nginx</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#introduccion" class="nav-link">INTRODUCCIÓN</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#configuraciones" class="nav-link">CONFIGURACIONES</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comprobaciones" class="nav-link">COMPROBACIONES</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>Natividad Márquez Baena</p>
+<h1 id="practica-24-balanceo-de-carga-con-proxy-inverso-en-nginx">Práctica 2.4 – Balanceo de carga con proxy inverso en Nginx</h1>
+<ol>
+<li>INTRODUCCIÓN</li>
+<li>CONFIGURACIONES</li>
+<li>COMPROBACIONES</li>
+</ol>
+<h2 id="introduccion">INTRODUCCIÓN</h2>
+<p>En esta practica se va a configurar y utilizar Nginx como proxy inverso y balanceador de carga en un entorno de servidores web, aprovechando sus capacidades para distribuir la carga de trabajo y gestionar las solicitudes de los clientes. </p>
+<p>Los servidores proxy inversos y los balanceadores de carga son intermediarios entre clientes y servidores en una arquitectura cliente-servidor, con el objetivo de mejorar la eficiencia de la comunicación.</p>
+<p>Un proxy inverso recibe solicitudes de clientes, las reenvía al servidor adecuado y devuelve la respuesta, gestionando la comunicación y proporcionando una capa adicional de seguridad, y puede implementarse incluso con un solo servidor.</p>
+<p>Un balanceador de carga, en cambio, distribuye las solicitudes entrantes entre múltiples servidores para optimizar el rendimiento y evitar sobrecargas. Es especialmente útil cuando el volumen de tráfico supera la capacidad de un solo servidor. Además, aumenta la fiabilidad al redirigir las solicitudes cuando un servidor falla, mejorando así la disponibilidad del sitio y la experiencia del usuario.</p>
+<p>Para la realización de esta practica se ha clonado previamente la máquina virtual con el webserver, para obtener dos servidores que balanceen la carga.</p>
+<h2 id="configuraciones">CONFIGURACIONES</h2>
+<p>En el clon de la maquina, se cambia la configuración del webserver a webserver 2. Para indicar que este será el otro servidor web. Se modifica el <code>server_name</code> por webserver2. 
+<img alt="alt text" src="../image.png" />
+<img alt="alt text" src="../image-1.png" /></p>
+<p>También se modifica el <code>header</code>.</p>
+<p>Ya disponemos de los dos servidores web entre los que se van a repartir las peticiones al servidor, se procede a modificar el proxy inverso, para que realice este reparto de peticiones:</p>
+<p>En el archivo de configuración del proxy se modifica la configuración. Se añade un bloque llamado <code>upstream</code>, que son los bloques donde se repartirán la carga, en el siguiente formato:
+<img alt="alt text" src="../image-2.png" />
+De esta manera hemos indicado que se repartirán entre el webserver1 y el webserver2.</p>
+<p>Para cada cambio en los archivos de configuración, tanto de los servidores web como del proxy, se ha de restaurar nginx para aplicar los cambios:</p>
+<p><img alt="alt text" src="../image-4.png" /></p>
+<p>También realizamos una comprobación del archivo hosts de la máquina anfitriona, para comprobar que la IP es correcta.</p>
+<p><img alt="alt text" src="../image-3.png" /></p>
+<h2 id="comprobaciones">COMPROBACIONES</h2>
+<p>En este apartado se va a comprobar si la sobrecarga con multiples solicitudes al servidor, desencadena un balanceo al otro servidor web.</p>
+<p>Primeramente se comprueba el acceso a nuestro sitio web:</p>
+<p><img alt="alt text" src="../image-5.png" />
+La cabecera Host: webserver2 indica que la solicitud fue dirigida a <code>webserver2</code>.</p>
+<p>Si sometemos al sitio web a una "sobrecarga" presionando F5 repetidamente, el balanceo provocaría un cambio de la recepción de las solicitudes, al otro servidor web.</p>
+<p><img alt="alt text" src="../image-6.png" /></p>
+<p>Como se observa en la imagen, marcado en verde, la cabecera ha cambiado a <code>webserver1</code>. 
+De esta manera hemos comprobado que el balanceo de la carga entre los dos servidores funciona correctamente.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
